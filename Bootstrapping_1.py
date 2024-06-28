@@ -1,18 +1,29 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def bootstrap(data,num_iterations): #data: 1d array of values. #num_iterations: integer value of bootstrap iterations.
+def bootstrap(data, num_iterations): #data: 1d array of values. #num_iterations: integer value of bootstrap iterations.
+    """
+    Function bootstrap ...
+    Parameters:
+        data (1d array): The 1D array of values.
+        num_iterations (int): The number of bootstrapping iterations.
+
+    Returns:
+        bootstrap_samples (1d array):
+    """
     bootstrap_samples = []
-    length=len(data)
+    length = len(data)
 
     for i in range(num_iterations):
-        bootstrap_samples.append(np.random.choice(data,length,replace=True))
+        bootstrap_samples.append(np.random.choice(data, length, replace=True))
 
     return bootstrap_samples
 
-data = np.array([1,2,3,4,5]) #Data is input here. For example, 1 2 3 4 and 5 are used.
-num_iterations = 1000 #The number of iterations is put here. For more accurate results use a higher number of iterations.
-bootstrap_samples = bootstrap(data,num_iterations)
+
+data = np.array([1, 2, 3, 4, 5])  # Data is input here. For example, 1 2 3 4 and 5 are used.
+num_iterations = 1000  # The number of iterations is put here.
+# For more accurate results use a higher number of iterations.
+bootstrap_samples = bootstrap(data, num_iterations)
 
 ''' 
 To print all of the samples, use the code below:
@@ -21,16 +32,25 @@ To print all of the samples, use the code below:
     #print(bootstrap_samples[i])
 '''
 
-def collate(bootstrap_samples): #This function collates the data in a dictionary with an input of the bootstrap samples.
-    length_data = len(data)
-    values = {} #create empty dictionary
-    key = 0 #key increases when a new key is added. so it should reach 5.
 
-    for i in range(num_iterations): #0--> n-1
-        for j in range(length_data): #0 --> 5 in this example.
-            key_string = "key_" + str(bootstrap_samples[i][j]) #key_4, for example.
+def collate(bootstrap_samples):
+    """
+    Function collate, collates the data in a dictionary.
+
+    Parameters:
+        bootstrap_samples (1d array): A 1D array of samples.
+    Returns:
+        values (dictionary):
+    """
+    length_data = len(data)
+    values = {}  # Create empty dictionary
+    key = 0  # Key increases when a new key is added. so it should reach 5.
+
+    for i in range(num_iterations):  # 0--> n-1
+        for j in range(length_data):  # 0 --> 5 in this example.
+            key_string = "key_" + str(bootstrap_samples[i][j])  # key_4, for example.
             values[key_string] = int(values.get(key_string, 0)) + 1
-            #print(values)
+            # print(values)
     return values
     
 values = collate(bootstrap_samples)
@@ -41,7 +61,14 @@ for key_name, count in values.items():
     print(f"{key_name}: {count}") #f --> format
 '''
 
-def graph_mean(bootstrap_samples): #This function graphs the mean of the data using matplotlib. The input is the bootstrap samples.
+def graph_mean(bootstrap_samples):
+    """
+    Function graph_mean graphs the mean of the data using matplotlib. The input is the bootstrap samples.
+    Parameters:
+        bootstrap_samples (1d array):
+    Returns:
+        
+    """
     bootstrap_means = []
     for i in range(num_iterations):
         mean = np.mean(bootstrap_samples[i])
