@@ -1,15 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def bootstrap(data, num_iterations): #data: 1d array of values. #num_iterations: integer value of bootstrap iterations.
     """
-    Function bootstrap ...
+    Function bootstrap randomises the input data by the inputted number of iterations.
+
     Parameters:
         data (1d array): The 1D array of values.
         num_iterations (int): The number of bootstrapping iterations.
 
     Returns:
-        bootstrap_samples (1d array):
+        bootstrap_samples (2d array): An array containing all randomised samples.
     """
     bootstrap_samples = []
     length = len(data)
@@ -20,20 +22,7 @@ def bootstrap(data, num_iterations): #data: 1d array of values. #num_iterations:
     return bootstrap_samples
 
 
-data = np.array([1, 2, 3, 4, 5])  # Data is input here. For example, 1 2 3 4 and 5 are used.
-num_iterations = 1000  # The number of iterations is put here.
-# For more accurate results use a higher number of iterations.
-bootstrap_samples = bootstrap(data, num_iterations)
-
-''' 
-To print all of the samples, use the code below:
-#for i in range(len(bootstrap_samples)):
-    #print(i) --> sample number 0-->n-1 where n = length of samples.
-    #print(bootstrap_samples[i])
-'''
-
-
-def collate(bootstrap_samples):
+def collate(bootstrap_samples, num_iterations):
     """
     Function collate, collates the data in a dictionary.
 
@@ -42,7 +31,7 @@ def collate(bootstrap_samples):
     Returns:
         values (dictionary):
     """
-    length_data = len(data)
+    length_data = len(bootstrap_samples[0])
     values = {}  # Create empty dictionary
     key = 0  # Key increases when a new key is added. so it should reach 5.
 
@@ -53,15 +42,8 @@ def collate(bootstrap_samples):
             # print(values)
     return values
     
-values = collate(bootstrap_samples)
 
-'''
-Displaying values from the dictionary:
-for key_name, count in values.items():
-    print(f"{key_name}: {count}") #f --> format
-'''
-
-def graph_mean(bootstrap_samples):
+def graph_mean(bootstrap_samples, num_iterations):
     """
     Function graph_mean graphs the mean of the data using matplotlib. The input is the bootstrap samples.
     Parameters:
@@ -80,7 +62,6 @@ def graph_mean(bootstrap_samples):
     plt.ylabel('Frequency')
     plt.show()
 
-graph_mean(bootstrap_samples)
 
 #confidence interval:
 def confidence_mean(bootstrap_samples,confidence):
@@ -89,5 +70,3 @@ def confidence_mean(bootstrap_samples,confidence):
     
     return
 
-
-confidence(bootstrap_samples, 95)
