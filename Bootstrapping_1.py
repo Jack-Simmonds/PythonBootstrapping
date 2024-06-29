@@ -28,8 +28,9 @@ def collate(bootstrap_samples, num_iterations):
 
     Parameters:
         bootstrap_samples (1d array): A 1D array of samples.
+        num_iterations (int): The number of bootstrapping iterations.
     Returns:
-        values (dictionary):
+        values (dictionary): The collated data stored as a dictionary.
     """
     length_data = len(bootstrap_samples[0])
     values = {}  # Create empty dictionary
@@ -64,9 +65,28 @@ def graph_mean(bootstrap_samples, num_iterations):
 
 
 #confidence interval:
-def confidence_mean(bootstrap_samples,confidence):
+def confidence_mean(bootstrap_samples, num_iterations, confidence):
+    """
+    Function confidence_mean calculates the confidence intervals of the mean
+
+    :param bootstrap_samples:
+    :param confidence:
+    :return:
+    Preconditions:
+        The confidence interval should be expressed as a percentage, for example, confidence=95 represents a confidence
+        interval of 95%.
+    """
+
+    bootstrap_means = []
+    for i in range(num_iterations):
+        mean = np.mean(bootstrap_samples[i])
+        bootstrap_means.append(mean)
+
     lower_limit = (100-confidence)/2
     upper_limit = (100+confidence)/2
+
+    lower_bound = np.percentile(bootstrap_means, lower_limit)
+    upper_bound = np.percentile(bootstrap_means, upper_limit)
     
-    return
+    return [lower_bound, upper_bound]
 

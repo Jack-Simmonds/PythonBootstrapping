@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from Bootstrapping_1 import *
 
 data = np.array([1, 2, 3, 4, 5])  # Data is input here. For example, 1 2 3 4 and 5 are used.
-num_iterations = 1000  # The number of iterations is put here.
+num_iterations = 10000  # The number of iterations is put here.
 # For more accurate results use a higher number of iterations.
 samples = bootstrap(data, num_iterations)
 
@@ -26,5 +26,6 @@ for key_name, count in values.items():
 graph_mean(samples, num_iterations)
 
 
-confidence_mean(samples, 95)
+[lower, upper] = confidence_mean(samples, num_iterations, 95)
 
+print(f'The mean has a 95% certainty of being between {lower} and {upper}.')
