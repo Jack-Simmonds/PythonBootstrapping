@@ -67,7 +67,7 @@ def graph_mean(bootstrap_samples):
     Parameters:
         bootstrap_samples (1d array):
     Returns:
-        
+
     """
     bootstrap_means = []
     for i in range(num_iterations):
